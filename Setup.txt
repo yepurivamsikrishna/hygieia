@@ -1,0 +1,87 @@
+Database Setup
+
+>> Install mongodb
+
+Create Dir
+>> C:/Users/[usernname]/dev/data/db
+
+>> mongod --dbpath C:/Users/[usernname]/dev/data/db
+
+>> mongo
+Output:  MongoDB shell version: 3.2
+         connecting to: test				
+#Switch to analyticsdb
+>> use analyticsdb
+Output:  switched to analyticsdb
+
+#Create db user
+
+>> db.createUser(
+            {
+              user: "dashboarduser",
+              pwd: "dbpassword",
+              roles: [
+              {role: "readWrite", db: "analyticsdb"}
+              ]
+            })
+>>  db.getUsers()
+[
+        {
+                "_id" : "analyticsdb.dashboarduser",
+                "userId" : UUID("b0113dba-87e4-4cbc-aa81-d8c0f7c4bd9c"),
+                "user" : "dashboarduser",
+                "db" : "analyticsdb",
+                "roles" : [
+                        {
+                                "role" : "readWrite",
+                                "db" : "analyticsdb"
+                        }
+                ],
+                "mechanisms" : [
+                        "SCRAM-SHA-1",
+                        "SCRAM-SHA-256"
+                ]
+        }
+]
+
+--------------------------------------------------------------------------------------
+Install Hygieia API
+>> https://github.com/hygieia/api
+>> mvn install
+>> java -jar api.jar --spring.config.location="C:\Users\Vamsi Krishna Yepuri\Desktop\Hygieia Docs\App\api.properties" -Djasypt.encryptor.password=hygieiasecret
+
+http://localhost:8080/api/ping
+http://localhost:8080/api/appinfo
+http://localhost:8080/api/dashboard
+
+----------------------------------------------------------------------------------------
+Install Hygieia Audit API
+>> https://github.com/Hygieia/api-audit
+>> mvn install
+>> java -jar api-audit.jar --spring.config.location="C:\Users\Vamsi Krishna Yepuri\Desktop\Hygieia Docs\App\api-audit.properties"
+
+http://localhost:8090/apiaudit/ping
+
+-------------------------------------------------------------------------------------
+
+Install Hygieia Dashboard
+>> https://github.com/hygieia/hygieia (Code)
+>> https://github.com/hygieia/UI#build-the-project (Docs)
+
+npm install
+ng build
+ng serve
+
+http://localhost:4200/
+------------------------------------------------------------------
+Jenkins Collector
+>> https://github.com/Hygieia/hygieia-build-jenkins-collector
+>> mvn install
+>> java -jar jenkins-build-collector.jar  --spring.config.name=jenkins --spring.config.location="C:\Users\<USER>\Desktop\Hygieia Docs\App\jenkins-collector.properties"  -Djasypt.encryptor.password=hygieiasecret
+
+
+
+
+
+
+
